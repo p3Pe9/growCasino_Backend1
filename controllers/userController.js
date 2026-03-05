@@ -13,13 +13,17 @@ const cookieOpts = {
 //register
 async function register(req, res) {
     try {
-        const { email, username, psw } = req.body
+        const { email, username, psw, psw2 } = req.body
         //console.log(email,username,psw);
 
-        if (!email || !username || !psw) {
+        if (!email || !username || !psw || !psw2) {
             return res.status(400).json({ error: 'Töltsd ki az összes mezőt!' })
         }
         const exists = await findByEmail(email)
+
+        if (psw!=psw2) {
+            return res.status(400).json({error:'A két jelszó nem egyezik'})
+        }
 
         //console.log(exists);
         if (exists) {
@@ -28,7 +32,7 @@ async function register(req, res) {
         const hash = await bcrypt.hash(psw, 10)
         //console.log(hash);
         const { insertId } = await createUSer(username, email, hash)
-        console.log(insertId);
+        //console.log(insertId);
 
         return res.status(201).json({ message: 'Sikeres regisztráció!', insertId })
     } catch (err) {
@@ -57,7 +61,7 @@ async function login(req, res) {
         }
 
         const token = jwt.sign(
-            { user_id: exists.user_id, email: exists.email, username: exists.username, role: exists.role },
+            { UserID: exists.UserID, email: exists.Email, username: exists.Username, role: exists.role },
             config.JWT_SECRET,
             { expiresIn: config.JWT_EXPIRES_IN }
         )
@@ -75,9 +79,9 @@ async function login(req, res) {
 
 async function whoami(req,res){
     try {
-        const {userid, username, email, role}=req.user
-        console.log(userid, username, email,role);
-        return res.status(200).json({UserID: userid, Username: email, Email:email, role:role})
+        const {UserID, username, email, role}=req.user
+        console.log(UserID, username, email,role);
+        return res.status(200).json({UserID: UserID, Username: email, Email:email, role:role})
         
     } catch (error) {
         return res.status(500).json({error: 'whoami server oldali hiba'})

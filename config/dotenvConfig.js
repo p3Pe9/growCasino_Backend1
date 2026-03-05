@@ -10,9 +10,11 @@ const config={
     DB_PASSWORD: process.env.DB_PASSWORD,
     DB_NAME:process.env.DB_NAME,
     DB_TIMEZONE: process.env.DB_TIMEZONE,
+
     JWT_SECRET:process.env.JWT_SECRET,
-    COOKIE_NAME: process.env.COOKIE_NAME,
-    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    
+    COOKIE_NAME: process.env.COOKIE_NAME
 }
 
 module.exports={config}
