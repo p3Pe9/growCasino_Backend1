@@ -10,7 +10,7 @@ const cookieOpts = {
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7
 }
-
+//register
 async function register(req, res) {
     try {
         const { email, username, psw } = req.body
@@ -35,7 +35,7 @@ async function register(req, res) {
         return res.status(500).json({ error: 'Regisztrációs hiba', err })
     }
 }
-
+//login
 async function login(req, res) {
     try {
         const { email, psw } = req.body
@@ -62,6 +62,7 @@ async function login(req, res) {
             { expiresIn: config.JWT_EXPIRES_IN }
         )
         //console.log(token);
+        console.log(config.COOKIE_NAME);
         res.cookie(config.COOKIE_NAME, token, cookieOpts)
         return res.status(200).json({ message: 'Sikeres login' })
     } catch (err) {
@@ -72,6 +73,26 @@ async function login(req, res) {
 
 }
 
+async function whoami(req,res){
+    try {
+        const {userid, username, email, role}=req.user
+        console.log(userid, username, email,role);
+        return res.status(200).json({UserID: userid, Username: email, Email:email, role:role})
+        
+    } catch (error) {
+        return res.status(500).json({error: 'whoami server oldali hiba'})
+    }
+    
+}
+
+async function logout(req,res){
+
+    try {
+        return res.clearCookie(config.COOKIE_NAME, {path:'/'}).status(200).json({message:'Sikeres kijelentkezés'})
+    } catch (error) {
+        return res.status(500).json({error: 'logout server oldali hiba'})
+    }
+}
 
 
-module.exports = { register, login }
+module.exports = { register, login, whoami, logout }
