@@ -5,7 +5,7 @@ const uploadProfileImage = async (req, res) => {
     try {
 
         const userId = req.params.id
-
+        // console.log(userId);
         if (!req.file) {
             return res.status(400).json({
                 message: "Nincs kép feltöltve"
@@ -16,9 +16,10 @@ const uploadProfileImage = async (req, res) => {
 
         await userImgModel.updateProfileImage(userId, imageName)
 
-        res.json({
-            message: "Profil kép modosult",
+        res.status(201).json({
+            message: "Sikeres feltöltés",
             file: imageName
+            
         })
 
     } catch (error) {

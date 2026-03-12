@@ -6,12 +6,13 @@ const MAX_FILE_SIZE=1024*1024*10
 
 const storage=multer.diskStorage({
     destination:(req, file,cb)=>{
-        const {UserID}=req.params
-        if (!UserID) {
-            return cb(new Error('Hiányzik a user azonosító'), null)
+        const UserID=req.params.id
+        console.log(UserID);
+        if (isNaN(UserID)) {
+            return cb(new Error('Hiányzik a zsűri azonosító'), null)
         }
 
-        const uploadDir=path.join(process.cwd(), 'uploads', String(zsuri_id))
+        const uploadDir=path.join(process.cwd(), 'uploads', String(UserID))
 
         try {
             fs.mkdirSync(uploadDir, {recursive: true})

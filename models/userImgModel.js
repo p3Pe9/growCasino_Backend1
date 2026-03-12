@@ -1,10 +1,10 @@
 const db = require("../db/db")
 
-const updateProfileImage = async (userId, imageName) => {
+const updateProfileImage = async (UserID, imageName) => {
 
-    const sql = "UPDATE users SET PFP = ? WHERE UserID = ?"
+    const sql = "UPDATE user SET PFP = ? WHERE UserID = ?"
 
-    const [result] = await db.execute(sql, [imageName, userId])
+    const [result] = await db.execute(sql, [imageName, UserID])
 
     return result
 }
