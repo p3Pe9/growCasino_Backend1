@@ -13,4 +13,18 @@ async function createUSer(username, email, hash) {
     return { insertId: result.insertId }
 }
 
-module.exports = { findByEmail, createUSer }
+async function deleteUserDb(UserID){
+    const sql='DELETE FROM `user` WHERE UserID=?'
+    const [result] = await db.execute(sql, [UserID])
+
+    return result
+}
+
+
+async function findUserById(UserID){
+    const sql='Select * FROM `user` WHERE UserID=?'
+    const [result] = await db.execute(sql, [UserID])
+    return result
+}
+
+module.exports = { findByEmail, createUSer, deleteUserDb, findUserById }

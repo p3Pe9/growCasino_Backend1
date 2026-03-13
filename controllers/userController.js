@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { findByEmail, createUSer } = require('../models/userModel.js')
+const { findByEmail, createUSer, deleteUserDb, findUserById } = require('../models/userModel.js')
 const { config } = require('../config/dotenvConfig')
 
 const cookieOpts = {
@@ -98,5 +98,37 @@ async function logout(req,res){
     }
 }
 
+async function deleteUser(req, res) {
 
-module.exports = { register, login, whoami, logout }
+    try {
+
+        const { UserID } = req.params
+        // console.log(UserID);
+        const exists = await findUserById(UserID)
+        // console.log(exists);
+        // console.log(exists);
+        if (exists.length == 0) {
+            // console.log('asd');
+            return res.status(404).json({ error: "Nincs ilyen felhasználó" })
+        }
+
+        await deleteUserDb(UserID)
+
+        return res.status(201).json({
+            message: "Felhasználó törölve"
+        })
+
+    } catch (err) {
+
+        console.log(err)
+
+        return res.status(500).json({
+            error: "Törlési hiba",
+            err
+        })
+
+    }
+
+}
+
+module.exports = { register, login, whoami, logout, deleteUser }
