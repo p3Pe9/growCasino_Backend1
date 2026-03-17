@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { findByEmail, createUSer, deleteUserDb, findUserById } = require('../models/userModel.js')
+const { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById, updatePasswordById } = require('../models/userModel.js')
 const { config } = require('../config/dotenvConfig')
 
 const cookieOpts = {
@@ -114,7 +114,7 @@ async function deleteUser(req, res) {
 
         await deleteUserDb(UserID)
 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Felhasználó törölve"
         })
 
@@ -131,4 +131,79 @@ async function deleteUser(req, res) {
 
 }
 
-module.exports = { register, login, whoami, logout, deleteUser }
+async function updateUsername(req, res) {
+
+    try {
+
+        const { userId, username } = req.body
+
+        if (!userId || !username) {
+            return res.status(400).json({ error: "UserID és username kötelező" })
+        }
+
+        const exists = await findUserById(userId)
+
+        if (!exists) {
+            return res.status(404).json({ error: "Nincs ilyen felhasználó" })
+        }
+
+        await updateUsernameById(userId, username)
+
+        return res.status(200).json({
+            message: "Username sikeresen módosítva"
+        })
+
+    } catch (err) {
+
+        console.log(err)
+
+        return res.status(500).json({
+            error: "Username módosítási hiba"
+        })
+
+    }
+
+}
+
+async function updatePassword(req, res) {
+    try {
+
+        const { oldPassword, newPassword } = req.body
+        const userId = req.user.UserID
+
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({
+                error: "Minden mező kötelező"
+            })
+        }
+
+        const user = await findUserById(userId)
+
+        const ok = await bcrypt.compare(oldPassword, user.Psw)
+
+        if (!ok) {
+            return res.status(401).json({
+                error: "Régi jelszó hibás"
+            })
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10)
+
+        await updatePasswordById(userId, hashedPassword)
+
+        res.status(200).json({
+            message: "Jelszó módosítva"
+        })
+
+    } catch (err) {
+
+        console.log(err)
+
+        res.status(500).json({
+            error: "Jelszó módosítás hiba"
+        })
+
+    }
+}
+
+module.exports = { register, login, whoami, logout, deleteUser, updateUsername, updatePassword }

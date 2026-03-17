@@ -27,4 +27,35 @@ async function findUserById(UserID){
     return result
 }
 
-module.exports = { findByEmail, createUSer, deleteUserDb, findUserById }
+async function updateUsernameById(userId, username) {
+
+    const sql = `
+        UPDATE user
+        SET Username = ?
+        WHERE UserID = ?
+    `
+
+    const [result] = await db.execute(sql, [username, userId])
+
+    return result
+}
+
+
+async function updatePasswordById(userId, password) {
+
+    const sql = `
+        UPDATE user
+        SET Psw = ?
+        WHERE UserID = ?
+    `
+
+    const [result] = await db.execute(sql, [password, userId])
+
+    return result
+}
+
+module.exports = {
+    updatePasswordById
+}
+
+module.exports = { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById,updatePasswordById }
