@@ -23,8 +23,8 @@ async function deleteUserDb(UserID){
 
 async function findUserById(UserID){
     const sql='Select * FROM `user` WHERE UserID=?'
-    const [result] = await db.execute(sql, [UserID])
-    return result
+    const [result] = await db.query(sql, [UserID])
+    return result[0]
 }
 
 async function updateUsernameById(userId, username) {

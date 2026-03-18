@@ -11,6 +11,6 @@ router.get('/whoami',auth, whoami)
 router.post('/logout', auth, logout)
 router.delete("/delete-user/:UserID", deleteUser)
 router.put("/update-username", updateUsername)
-router.put("/update-password", updatePassword)
+router.put("/update-password",auth, updatePassword)
 
 module.exports=router

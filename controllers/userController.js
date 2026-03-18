@@ -21,8 +21,8 @@ async function register(req, res) {
         }
         const exists = await findByEmail(email)
 
-        if (psw!=psw2) {
-            return res.status(400).json({error:'A két jelszó nem egyezik'})
+        if (psw != psw2) {
+            return res.status(400).json({ error: 'A két jelszó nem egyezik' })
         }
 
         //console.log(exists);
@@ -53,7 +53,7 @@ async function login(req, res) {
         if (!exists) {
             return res.status(401).json({ error: 'még nincs ilyen felhasználó' })
         }
- 
+
         const ok = await bcrypt.compare(psw, exists.Psw)
         //console.log(ok);
         if (!ok) {
@@ -77,24 +77,24 @@ async function login(req, res) {
 
 }
 
-async function whoami(req,res){
+async function whoami(req, res) {
     try {
-        const {UserID, username, email, role}=req.user
-        console.log(UserID, username, email,role);
-        return res.status(200).json({UserID: UserID, Username: email, Email:email, role:role})
-        
+        const { UserID, username, email, role } = req.user
+        console.log(UserID, username, email, role);
+        return res.status(200).json({ UserID: UserID, Username: email, Email: email, role: role })
+
     } catch (error) {
-        return res.status(500).json({error: 'whoami server oldali hiba'})
+        return res.status(500).json({ error: 'whoami server oldali hiba' })
     }
-    
+
 }
 
-async function logout(req,res){
+async function logout(req, res) {
 
     try {
-        return res.clearCookie(config.COOKIE_NAME, {path:'/'}).status(200).json({message:'Sikeres kijelentkezés'})
+        return res.clearCookie(config.COOKIE_NAME, { path: '/' }).status(200).json({ message: 'Sikeres kijelentkezés' })
     } catch (error) {
-        return res.status(500).json({error: 'logout server oldali hiba'})
+        return res.status(500).json({ error: 'logout server oldali hiba' })
     }
 }
 
@@ -170,6 +170,7 @@ async function updatePassword(req, res) {
 
         const { oldPassword, newPassword } = req.body
         const userId = req.user.UserID
+        // console.log(userId);
 
         if (!oldPassword || !newPassword) {
             return res.status(400).json({
@@ -178,9 +179,13 @@ async function updatePassword(req, res) {
         }
 
         const user = await findUserById(userId)
-
+        // console.log(user);
+        // console.log(user.Psw);
+        // console.log(ok);
         const ok = await bcrypt.compare(oldPassword, user.Psw)
-
+        // console.log(config.JWT_SECRET);
+        // console.log(oldPassword, user.Psw);
+        // console.log(ok);
         if (!ok) {
             return res.status(401).json({
                 error: "Régi jelszó hibás"
