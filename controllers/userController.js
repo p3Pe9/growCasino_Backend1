@@ -13,17 +13,13 @@ const cookieOpts = {
 //register
 async function register(req, res) {
     try {
-        const { email, username, psw, psw2 } = req.body
-        //console.log(email,username,psw);
+        const { email, username, psw} = req.body
+        console.log(email,username,psw);
 
-        if (!email || !username || !psw || !psw2) {
+        if (!email || !username || !psw) {
             return res.status(400).json({ error: 'Töltsd ki az összes mezőt!' })
         }
         const exists = await findByEmail(email)
-
-        if (psw != psw2) {
-            return res.status(400).json({ error: 'A két jelszó nem egyezik' })
-        }
 
         //console.log(exists);
         if (exists) {
@@ -49,7 +45,7 @@ async function login(req, res) {
         }
         const exists = await findByEmail(email)
 
-        console.log(exists);
+        //console.log(exists);
         if (!exists) {
             return res.status(401).json({ error: 'még nincs ilyen felhasználó' })
         }
@@ -66,11 +62,11 @@ async function login(req, res) {
             { expiresIn: config.JWT_EXPIRES_IN }
         )
         //console.log(token);
-        console.log(config.COOKIE_NAME);
+        //console.log(config.COOKIE_NAME);
         res.cookie(config.COOKIE_NAME, token, cookieOpts)
         return res.status(200).json({ message: 'Sikeres login' })
     } catch (err) {
-        console.log(err);
+        //console.log(err);
         return res.status(500).json({ error: 'Belépési hiba', err })
     }
 
