@@ -77,7 +77,7 @@ async function whoami(req, res) {
     try {
         const { UserID, username, email, role } = req.user
         console.log(UserID, username, email, role);
-        return res.status(200).json({ UserID: UserID, Username: email, Email: email, role: role })
+        return res.status(200).json({ UserID: UserID, Username: username, Email: email, role: role })
 
     } catch (error) {
         return res.status(500).json({ error: 'whoami server oldali hiba' })
