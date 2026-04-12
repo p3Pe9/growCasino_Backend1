@@ -6,7 +6,7 @@ function auth(req, res, next){
     const token=req.cookies?.[config.COOKIE_NAME] 
     //console.log(token);
     if (!token) {
-        return res.status(401).json({error: "Nincs kuki"})
+        return res.status(401).json({error: "Nincs cookie"})
     }
     try {
         req.user=jwt.verify(token, config.JWT_SECRET)
