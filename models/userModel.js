@@ -54,8 +54,18 @@ async function updatePasswordById(userId, password) {
     return result
 }
 
+async function updateBalance(userId, amount) {
+    const sql = `
+        UPDATE user
+        SET Balance = Balance + ?
+        WHERE UserID = ?
+    `
+    const [result] = await db.execute(sql, [amount, userId])
+    return result
+}
+
 module.exports = {
     updatePasswordById
 }
 
-module.exports = { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById,updatePasswordById }
+module.exports = { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById,updatePasswordById, updateBalance }

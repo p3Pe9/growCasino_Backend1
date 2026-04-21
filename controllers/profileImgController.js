@@ -1,4 +1,4 @@
-const userImgModel = require("../models/userImgModel")
+ const userImgModel = require("../models/userImgModel")
 
 const uploadProfileImage = async (req, res) => {
 
