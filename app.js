@@ -13,10 +13,8 @@ app.use(cookieParser())
 app.use('/user', userRoutes)
 app.use('/mines', minesRoutes)
 
-
-
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://growkaszi.netlify.app/'],
     credentials: true
 }))
 
