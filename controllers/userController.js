@@ -57,7 +57,7 @@ async function login(req, res) {
         }
 
         const token = jwt.sign(
-            { UserID: exists.UserID, email: exists.Email, username: exists.Username, role: exists.role, balance:Balance },
+            { UserID: exists.UserID, email: exists.Email, username: exists.Username, role: exists.role },
             config.JWT_SECRET,
             { expiresIn: config.JWT_EXPIRES_IN }
         )
@@ -75,9 +75,9 @@ async function login(req, res) {
 
 async function whoami(req, res) {
     try {
-        const { UserID, username, email, role, balance } = req.user
+        const { UserID, username, email, role } = req.user
         console.log(UserID, username, email, role);
-        return res.status(200).json({ UserID: UserID, Username: username, Email: email, role: role, Balance: balance })
+        return res.status(200).json({ UserID: UserID, Username: username, Email: email, role: role })
 
     } catch (error) {
         return res.status(500).json({ error: 'whoami server oldali hiba' })
