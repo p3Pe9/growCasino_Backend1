@@ -14,5 +14,6 @@ router.delete("/delete-user/:UserID", deleteUser)
 router.put("/update-username", updateUsername)
 router.put("/update-password",auth, updatePassword)
 router.get('/balance', auth, getUserBalance)
+router.post('/deposit', auth, getUserBalance)
 
 module.exports=router
