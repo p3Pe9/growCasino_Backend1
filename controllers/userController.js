@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById, updatePasswordById } = require('../models/userModel.js')
+const { findByEmail, createUSer, deleteUserDb, findUserById, updateUsernameById, updatePasswordById, updateBalance } = require('../models/userModel.js')
 const { config } = require('../config/dotenvConfig')
+
+
 
 const cookieOpts = {
     httpOnly: true,
@@ -207,4 +209,6 @@ async function updatePassword(req, res) {
     }
 }
 
-module.exports = { register, login, whoami, logout, deleteUser, updateUsername, updatePassword }
+
+
+module.exports = { register, login, whoami, logout, deleteUser, updateUsername, updatePassword}
