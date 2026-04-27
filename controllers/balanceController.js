@@ -1,4 +1,4 @@
-const {getBalance} = require('../models/userModel')
+const {getBalance, updateBalance} = require('../models/userModel')
 
 async function getUserBalance(req, res) {
     try {
