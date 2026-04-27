@@ -17,27 +17,24 @@ async function getUserBalance(req, res) {
     }
 }
 async function depositBalance(req, res) {
-    try {
+     try {
         const userId = req.user.UserID
         const amount = Number(req.body.amount)
 
         if (!amount || amount <= 0) {
-            return res.status(400).json({
-                msg: 'Invalid amount'
-            })
+            return res.status(400).json({ msg: 'Invalid amount' })
         }
 
         await updateBalance(userId, amount)
 
+        const user = await getBalance(userId)
+
         res.json({
-            msg: 'Balance updated',
-            added: amount
+            balance: user.Balance
         })
 
     } catch (err) {
-        res.status(500).json({
-            msg: err.message
-        })
+        res.status(500).json({ msg: err.message })
     }
 }
 
