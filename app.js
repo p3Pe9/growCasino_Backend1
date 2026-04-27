@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 
-app.use('/user', userRoutes)
+app.use('/users', userRoutes)
 app.use('/mines', minesRoutes)
 app.use('/api/profile-images', profileImgRoutes)
 
