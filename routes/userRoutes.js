@@ -3,6 +3,7 @@ const {register, login, whoami, logout, updateUsername, updatePassword}=require(
 const{auth}=require('../middleware/userMiddleware')
 const { deleteUser } = require("../controllers/userController")
 const { getUserBalance } = require('../controllers/balanceController')
+const { depositBalance } = require('../controllers/balanceController')
 
 const router=express.Router()
 
@@ -14,6 +15,6 @@ router.delete("/delete-user/:UserID", deleteUser)
 router.put("/update-username", updateUsername)
 router.put("/update-password",auth, updatePassword)
 router.get('/balance', auth, getUserBalance)
-router.post('/deposit', auth, getUserBalance)
+router.post('/deposit', auth, depositBalance)
 
 module.exports=router
