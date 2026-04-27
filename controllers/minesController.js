@@ -22,32 +22,35 @@ async function generateGrid(bombs) {
     return grid
 }
 
-// játék indítás
 async function startGame(req, res) {
-    console.log(req.body);
     try {
-        const { bombs, betAmount } = req.body
+        const { bombs } = req.body
+        const betAmount = Number(req.body.betAmount)
+
         const userId = req.user.UserID
 
-        // balance levonás
+        const user = await findUserById(userId)
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' })
+        }
+
+        if (Number(user.Balance) < betAmount) {
+            return res.status(400).json({
+                msg: 'Not enough balance'
+            })
+        }
+
         await updateBalance(userId, -betAmount)
 
-        const grid = generateGrid(bombs)
-        const revealed = Array(25).fill(false)
-
-        const game = await createGame(
-            userId,
-            bombs,
-            grid,
-            revealed,
-            betAmount
-        )
-
         res.json({
-            gameId: game.insertId
+            msg: 'Game started'
         })
+
     } catch (err) {
-        res.status(500).json({ error: err.message })
+        res.status(500).json({
+            msg: err.message
+        })
     }
 }
 
