@@ -339,10 +339,7 @@ Ajánlott sorrend:
 - Tranzakció history
 - Admin panel
 - Jackpot rendszer
-- Provably Fair Mines
-- Real-time socket.io játékok
-- Frontend integráció
-- Deploy productionre
+
 
 ---
 
