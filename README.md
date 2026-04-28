@@ -184,10 +184,10 @@ node server.js
 
 | Metódus | Endpoint | Leírás |
 |--------|----------|--------|
-| POST | /user/register | Regisztráció |
-| POST | /user/login | Bejelentkezés |
-| GET | /user/balance | Balance lekérés |
-| POST | /user/deposit | Pénz hozzáadása |
+| POST | /users/register | Regisztráció |
+| POST | /users/login | Bejelentkezés |
+| GET | /users/balance | Balance lekérés |
+| POST | /users/deposit | Pénz hozzáadása |
 
 ---
 
@@ -205,7 +205,7 @@ node server.js
 
 | Metódus | Endpoint | Leírás |
 |--------|----------|--------|
-| POST | /api/profile-images | Profilkép feltöltés |
+| POST | /upload-pfp/:id | Profilkép feltöltés |
 
 ---
 
@@ -322,18 +322,20 @@ req.cookies.token
 Ajánlott sorrend:
 
 1. Register  
-2. Login  
-3. Deposit  
-4. Balance  
-5. Start Game  
-6. Reveal  
-7. Cashout  
+2. Login
+3. Profile-image Upload
+4. Deposit  
+5. Balance  
+6. Start Game  
+7. Reveal  
+8. Cashout  
 
 ---
 
 # 🔮 További fejlesztések
 
 - Withdraw rendszer
+- Új játékok (Roulette, BlackJack, Bacaratta, és különböző Slot játékok)
 - Tranzakció history
 - Admin panel
 - Jackpot rendszer
