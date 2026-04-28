@@ -330,6 +330,7 @@ Ajánlott sorrend:
 7. Reveal  
 8. Cashout  
 
+https://documenter.getpostman.com/view/48599370/2sBXqJJfxo
 ---
 
 # 🔮 További fejlesztések
